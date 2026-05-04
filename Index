@@ -543,8 +543,9 @@
   <script>
     // ==================== KONFIGURASI BACKEND ====================
     // URL Web App Google Apps Script
-    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycby2OxnOu3MuK7fF4w9rK7CNpEtJY7qEiznQfyk62Ee6eEP6daKFQACEearVqE-onP3aYw/exec';
-    
+    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwPyTiLsuxRetxUTFo6C2PFahvbPvzbKT__nM_1V3C1Zqv-Co0_PXwjNVKwZzKhVD7u1w/exec';
+
+
     // Jadwal validasi (sinkron dengan backend)
     const jadwalMap = {
       kuantitatifA: { nama: "Metode Penelitian Kuantitatif Kelas A", kelas: "A", tanggal: "2026-05-04", start: "14:00", end: "16:30" },
