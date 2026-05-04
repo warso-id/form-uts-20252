@@ -543,7 +543,7 @@
   <script>
     // ==================== KONFIGURASI BACKEND ====================
     // URL Web App Google Apps Script
-    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwPyTiLsuxRetxUTFo6C2PFahvbPvzbKT__nM_1V3C1Zqv-Co0_PXwjNVKwZzKhVD7u1w/exec';
+    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycby4eg4KpNd6S0GSrhBxQLTkooi8BSNo7qwNqRAkI6NPqfGfNMPOGqI6lTQnkyzz6kcohw/exec';
 
 
     // Jadwal validasi (sinkron dengan backend)
