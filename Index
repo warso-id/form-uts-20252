@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Form Pengumpulan Hasil UTS 20252</title>
+  <style>
+    /* ===== CSS Internal (Menggantikan Tailwind) ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      padding: 1.5rem;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 56rem;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%);
+      padding: 1.25rem 1.5rem;
+    }
+    
+    @media (min-width: 768px) {
+      .header {
+        padding: 1.25rem 2rem;
+      }
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .logo {
+      height: 4rem;
+      width: auto;
+      border-radius: 0.5rem;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    }
+    
+    .title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    @media (min-width: 768px) {
+      .title {
+        font-size: 1.875rem;
+      }
+    }
+    
+    .subtitle {
+      color: #c7d2fe;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    
+    .header-right {
+      text-align: right;
+    }
+    
+    .header-badge {
+      color: #c7d2fe;
+      font-size: 0.75rem;
+    }
+    
+    .content {
+      padding: 1.25rem 1.5rem;
+    }
+    
+    @media (min-width: 768px) {
+      .content {
+        padding: 2rem;
+      }
+    }
+    
+    .step-progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    
+    .step-item {
+      text-align: center;
+      width: 33.333%;
+    }
+    
+    .step-circle {
+      width: 2rem;
+      height: 2rem;
+      margin: 0 auto;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      font-weight: bold;
+    }
+    
+    .step-circle.active {
+      background-color: #4f46e5;
+      color: white;
+    }
+    
+    .step-circle.completed {
+      background-color: #10b981;
+      color: white;
+    }
+    
+    .step-circle.inactive {
+      background-color: #e5e7eb;
+      color: #6b7280;
+    }
+    
+    .step-label {
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      display: block;
+      font-weight: 500;
+    }
+    
+    .step-label.active {
+      color: #4f46e5;
+    }
+    
+    .step-label.completed {
+      color: #10b981;
+    }
+    
+    .step-label.inactive {
+      color: #6b7280;
+    }
+    
+    @media (min-width: 768px) {
+      .step-label {
+        font-size: 0.875rem;
+      }
+    }
+    
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.25rem;
+    }
+    
+    .required {
+      color: #ef4444;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.75rem;
+      transition: all 0.2s;
+      font-size: 1rem;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      ring: 2px solid #4f46e5;
+      border-color: #4f46e5;
+    }
+    
+    .error-border {
+      border-color: #dc2626 !important;
+      background-color: #fef2f2 !important;
+    }
+    
+    .error-msg {
+      color: #dc2626;
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+    }
+    
+    .btn {
+      padding: 0.625rem 1.5rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      font-size: 0.875rem;
+    }
+    
+    .btn-primary {
+      background-color: #4f46e5;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #4338ca;
+    }
+    
+    .btn-secondary {
+      background-color: #e5e7eb;
+      color: #1f2937;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #d1d5db;
+    }
+    
+    .btn-success {
+      background-color: #10b981;
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background-color: #059669;
+    }
+    
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .flex-end {
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .gap-2 {
+      gap: 0.5rem;
+    }
+    
+    .info-box {
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+    
+    .info-success {
+      background-color: #f0fdf4;
+      border-left: 4px solid #22c55e;
+    }
+    
+    .info-error {
+      background-color: #fef2f2;
+      border-left: 4px solid #ef4444;
+    }
+    
+    .info-warning {
+      background-color: #fffbeb;
+      border-left: 4px solid #f59e0b;
+    }
+    
+    .upload-area {
+      border: 2px dashed #d1d5db;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      background-color: #f9fafb;
+      transition: all 0.2s;
+    }
+    
+    .upload-area:hover {
+      background-color: #f3f4f6;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1f2937;
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      z-index: 50;
+      transition: all 0.3s;
+      white-space: pre-line;
+      max-width: 90%;
+      text-align: center;
+    }
+    
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    
+    .loading-spinner {
+      background: white;
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      text-align: center;
+    }
+    
+    .fa-spinner, .fa-spin {
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+    
+    .grid-2 {
+      grid-template-columns: 1fr;
+    }
+    
+    @media (min-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    .mt-1 { margin-top: 0.25rem; }
+    .mt-2 { margin-top: 0.5rem; }
+    .mb-1 { margin-bottom: 0.25rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .pt-3 { padding-top: 0.75rem; }
+    .pt-4 { padding-top: 1rem; }
+    
+    .text-xs { font-size: 0.75rem; }
+    .text-sm { font-size: 0.875rem; }
+    .text-gray-400 { color: #9ca3af; }
+    .text-gray-500 { color: #6b7280; }
+    .text-gray-700 { color: #374151; }
+    .text-indigo-600 { color: #4f46e5; }
+    .text-red-500 { color: #ef4444; }
+    .text-green-600 { color: #16a34a; }
+    .text-blue-600 { color: #2563eb; }
+    .text-amber-700 { color: #b45309; }
+    .font-semibold { font-weight: 600; }
+    .font-bold { font-weight: 700; }
+    .font-mono { font-family: monospace; }
+    .break-all { word-break: break-all; }
+    .italic { font-style: italic; }
+    
+    input[type="file"] {
+      padding: 0.5rem;
+    }
+    
+    input[type="file"]::file-selector-button {
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: none;
+      background-color: #eef2ff;
+      color: #4f46e5;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    input[type="file"]::file-selector-button:hover {
+      background-color: #e0e7ff;
+    }
+    
+    a {
+      color: #2563eb;
+      text-decoration: underline;
+    }
+    
+    .col-span-2 {
+      grid-column: span 2;
+    }
+  </style>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loading-spinner">
+      <i class="fas fa-spinner fa-spin fa-2x" style="color: #4f46e5;"></i>
+      <p class="mt-2" style="color: #374151;">Menyimpan data ke server...</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <!-- Header dengan Logo -->
+      <div class="header">
+        <div class="header-content">
+          <div class="logo-area">
+            <img src="https://i.imgur.com/JkxRYd6.png" alt="Logo Universitas" class="logo">
+            <div>
+              <h1 class="title">
+                <i class="fas fa-clipboard-list"></i> Form Pengumpulan Hasil UTS 20252
+              </h1>
+              <p class="subtitle">Periode Ujian Tengah Semester (UTS) Tahun Akademik 20252</p>
+            </div>
+          </div>
+          <div class="header-right">
+            <p class="header-badge">Validasi Jadwal Otomatis</p>
+            <p class="header-badge mt-1"><i class="far fa-calendar-alt"></i> Mei 2026</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- Step Progress -->
+        <div class="step-progress">
+          <div class="step-item" id="step1Indicator">
+            <div class="step-circle active" id="step1Circle">1</div>
+            <span class="step-label active" id="step1Label">Data Diri</span>
+          </div>
+          <div class="step-item" id="step2Indicator">
+            <div class="step-circle inactive" id="step2Circle">2</div>
+            <span class="step-label inactive" id="step2Label">Pilih MK & Unggah</span>
+          </div>
+          <div class="step-item" id="step3Indicator">
+            <div class="step-circle inactive" id="step3Circle">3</div>
+            <span class="step-label inactive" id="step3Label">Konfirmasi</span>
+          </div>
+        </div>
+
+        <form id="multiStepForm" novalidate>
+          <!-- STEP 1 -->
+          <div id="step1" class="step-page">
+            <div class="grid grid-2">
+              <div class="form-group">
+                <label>Nama Lengkap <span class="required">*</span></label>
+                <input type="text" id="nama" name="nama" placeholder="Contoh: Ahmad Fauzi">
+                <p class="text-xs text-gray-400 mt-1">Minimal 3 karakter</p>
+              </div>
+              <div class="form-group">
+                <label>NIM <span class="required">*</span></label>
+                <input type="text" id="nim" name="nim" placeholder="Contoh: 20231001001">
+                <p class="text-xs text-gray-400 mt-1">Nomor Induk Mahasiswa, minimal 5 digit</p>
+              </div>
+            </div>
+            <div class="flex-end pt-4">
+              <button type="button" id="nextStep1" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Selanjutnya</button>
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div id="step2" class="step-page hidden">
+            <div class="form-group">
+              <label>Pilih Mata Kuliah <span class="required">*</span></label>
+              <select id="matkulSelect">
+                <option value="">-- Pilih Mata Kuliah --</option>
+                <option value="kuantitatifA">Metode Penelitian Kuantitatif Kelas A</option>
+                <option value="kuantitatifE">Metode Penelitian Kuantitatif Kelas E</option>
+                <option value="kuantitatifI">Metode Penelitian Kuantitatif Kelas I</option>
+                <option value="sosiologiK">Sosiologi Komunikasi Kelas K</option>
+              </select>
+              <div id="matkulWarning" class="text-red-500 text-xs mt-1 hidden"></div>
+            </div>
+
+            <div id="validasiInfo" class="info-box info-warning hidden">
+              <i class="fas fa-info-circle"></i> <span id="validasiText"></span>
+            </div>
+
+            <div class="upload-area">
+              <label class="font-semibold text-gray-700 mb-1">Upload Berkas (PDF/DOC/IMG) <span class="required">*</span></label>
+              <input type="file" id="fileUpload" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+              <p class="text-xs text-gray-400 mt-2">Maks 5MB, format PDF, DOC, JPG, PNG</p>
+              <div id="fileError" class="text-red-500 text-xs mt-1 hidden"></div>
+              <div id="fileNamePreview" class="text-indigo-600 text-xs mt-2 hidden" style="background: #eef2ff; padding: 0.5rem; border-radius: 0.5rem;"></div>
+            </div>
+
+            <div class="flex-between pt-3">
+              <button type="button" id="prevStep2" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</button>
+              <button type="button" id="nextStep2" class="btn btn-primary">Tinjau & Konfirmasi</button>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div id="step3" class="step-page hidden">
+            <div class="info-box" style="background: #f9fafb; border: 1px solid #e5e7eb;">
+              <h3 class="font-bold" style="border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
+                <i class="fas fa-check-circle" style="color: #16a34a;"></i> Data yang akan dikirim:
+              </h3>
+              <div class="grid grid-2" style="font-size: 0.875rem;">
+                <div><span class="font-semibold">Nama:</span> <span id="reviewNama">-</span></div>
+                <div><span class="font-semibold">NIM:</span> <span id="reviewNim">-</span></div>
+                <div class="col-span-2"><span class="font-semibold">Mata Kuliah:</span> <span id="reviewMatkul">-</span></div>
+                <div class="col-span-2"><span class="font-semibold">Nama File:</span> <span id="reviewFile" class="font-mono text-indigo-600 break-all">-</span></div>
+                <div class="col-span-2"><span class="font-semibold">Link File:</span> <span id="reviewFileLink" class="text-blue-600 break-all">-</span></div>
+                <div class="col-span-2 text-amber-700 italic"><i class="fas fa-clock"></i> <span id="reviewValidasiStatus"></span></div>
+              </div>
+            </div>
+            <div class="flex-between">
+              <button type="button" id="prevStep3" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</button>
+              <button type="button" id="submitFormBtn" class="btn btn-success"><i class="fas fa-cloud-upload-alt"></i> Kirim ke Server</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="toastMsg" class="toast hidden"></div>
+  </div>
+
+  <script>
+    // ==================== KONFIGURASI BACKEND ====================
+    // URL Web App Google Apps Script
+    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycby2OxnOu3MuK7fF4w9rK7CNpEtJY7qEiznQfyk62Ee6eEP6daKFQACEearVqE-onP3aYw/exec';
+    
+    // Jadwal validasi (sinkron dengan backend)
+    const jadwalMap = {
+      kuantitatifA: { nama: "Metode Penelitian Kuantitatif Kelas A", kelas: "A", tanggal: "2026-05-04", start: "14:00", end: "16:30" },
+      kuantitatifE: { nama: "Metode Penelitian Kuantitatif Kelas E", kelas: "E", tanggal: "2026-05-05", start: "15:00", end: "16:30" },
+      kuantitatifI: { nama: "Metode Penelitian Kuantitatif Kelas I", kelas: "I", tanggal: "2026-05-05", start: "19:30", end: "21:30" },
+      sosiologiK: { nama: "Sosiologi Komunikasi Kelas K", kelas: "K", tanggal: "2026-05-07", start: "19:30", end: "21:00" }
+    };
+
+    // DOM Elements
+    const step1Div = document.getElementById('step1');
+    const step2Div = document.getElementById('step2');
+    const step3Div = document.getElementById('step3');
+    const namaInput = document.getElementById('nama');
+    const nimInput = document.getElementById('nim');
+    const matkulSelect = document.getElementById('matkulSelect');
+    const fileInput = document.getElementById('fileUpload');
+    const fileNamePreview = document.getElementById('fileNamePreview');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    
+    let selectedFile = null;
+    let currentValidasiLulus = false;
+    let generatedFileName = '';
+
+    // Step elements
+    const circles = {
+      1: document.getElementById('step1Circle'),
+      2: document.getElementById('step2Circle'),
+      3: document.getElementById('step3Circle')
+    };
+    const labels = {
+      1: document.getElementById('step1Label'),
+      2: document.getElementById('step2Label'),
+      3: document.getElementById('step3Label')
+    };
+
+    // ==================== FUNGSI KONEKSI KE BACKEND ====================
+    async function submitToBackend(formData) {
+      try {
+        const response = await fetch(BACKEND_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            action: 'submitRegistration',
+            data: JSON.stringify(formData)
+          })
+        });
+        
+        // Karena mode no-cors, kita tidak bisa membaca response
+        // Asumsikan berhasil jika tidak error
+        return { 
+          success: true, 
+          message: 'Data berhasil dikirim ke server!'
+        };
+      } catch (error) {
+        console.error('Fetch error:', error);
+        throw error;
+      }
+    }
+
+    // ==================== FUNGSI UTILITY ====================
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          let base64 = reader.result;
+          const commaIndex = base64.indexOf(',');
+          if (commaIndex !== -1) {
+            base64 = base64.substring(commaIndex + 1);
+          }
+          resolve(base64);
+        };
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    function generateNewFileName(nama, nim, matkulKey) {
+      let cleanNama = nama.trim().replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_');
+      let matkulNama = jadwalMap[matkulKey]?.nama || 'Unknown_MK';
+      let cleanMatkul = matkulNama.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_');
+      cleanMatkul = cleanMatkul.replace('Kelas_', '');
+      const newName = `20252_UTS_${cleanNama}_${cleanMatkul}`;
+      
+      if (selectedFile) {
+        const extension = selectedFile.name.split('.').pop();
+        return `${newName}.${extension}`;
+      }
+      return newName;
+    }
+
+    function updateFileNamePreview() {
+      const nama = namaInput.value.trim();
+      const matkulKey = matkulSelect.value;
+      
+      if (nama && nama.length >= 3 && matkulKey && selectedFile) {
+        generatedFileName = generateNewFileName(nama, nimInput.value.trim(), matkulKey);
+        fileNamePreview.innerHTML = `<i class="fas fa-tag"></i> Nama file: <strong class="font-mono">${generatedFileName}</strong>`;
+        fileNamePreview.classList.remove('hidden');
+      } else if (selectedFile && (!nama || nama.length < 3)) {
+        fileNamePreview.innerHTML = `<i class="fas fa-exclamation-triangle" style="color: #d97706;"></i> Isi nama terlebih dahulu`;
+        fileNamePreview.classList.remove('hidden');
+      } else {
+        fileNamePreview.classList.add('hidden');
+      }
+    }
+
+    function validateStep1() {
+      let valid = true;
+      const namaVal = namaInput.value.trim();
+      const nimVal = nimInput.value.trim();
+
+      if (namaVal.length < 3) {
+        setError(namaInput, 'Nama minimal 3 karakter');
+        valid = false;
+      } else {
+        clearError(namaInput);
+      }
+
+      if (nimVal.length < 5 || !/^\d+$/.test(nimVal)) {
+        setError(nimInput, 'NIM harus berupa angka minimal 5 digit');
+        valid = false;
+      } else {
+        clearError(nimInput);
+      }
+      return valid;
+    }
+
+    function setError(input, msg) {
+      input.classList.add('error-border');
+      const parent = input.parentElement;
+      let errMsg = parent.querySelector('.error-msg-custom');
+      if (!errMsg) {
+        errMsg = document.createElement('p');
+        errMsg.className = 'error-msg-custom error-msg';
+        parent.appendChild(errMsg);
+      }
+      errMsg.innerText = msg;
+    }
+
+    function clearError(input) {
+      input.classList.remove('error-border');
+      const parent = input.parentElement;
+      const errMsg = parent.querySelector('.error-msg-custom');
+      if (errMsg) errMsg.remove();
+    }
+
+    function validateSchedule(mkValue) {
+      if (!mkValue || !jadwalMap[mkValue]) return { valid: false, message: "Pilih mata kuliah terlebih dahulu" };
+      const jadwal = jadwalMap[mkValue];
+      const now = new Date();
+      const todayStr = now.toISOString().split('T')[0];
+      const isSameDate = (todayStr === jadwal.tanggal);
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+      const startMinutes = parseInt(jadwal.start.split(':')[0]) * 60 + parseInt(jadwal.start.split(':')[1]);
+      const endMinutes = parseInt(jadwal.end.split(':')[0]) * 60 + parseInt(jadwal.end.split(':')[1]);
+      const withinTime = (currentMinutes >= startMinutes && currentMinutes <= endMinutes);
+
+      if (isSameDate && withinTime) {
+        return { valid: true, message: `✅ Valid: ${jadwal.nama} pada ${jadwal.tanggal} jam ${jadwal.start} - ${jadwal.end} WIB` };
+      } else {
+        let reason = !isSameDate ? `Hari ini bukan jadwal ujian (tanggal harus ${jadwal.tanggal})` : `Saat ini di luar jam ujian (${jadwal.start} - ${jadwal.end} WIB)`;
+        return { valid: false, message: `❌ ${reason}` };
+      }
+    }
+
+    function updateValidasiInfo() {
+      const selected = matkulSelect.value;
+      const infoDiv = document.getElementById('validasiInfo');
+      if (!selected) {
+        infoDiv.classList.add('hidden');
+        currentValidasiLulus = false;
+        return;
+      }
+      const result = validateSchedule(selected);
+      document.getElementById('validasiText').innerText = result.message;
+      infoDiv.classList.remove('hidden');
+      if (result.valid) {
+        infoDiv.className = "info-box info-success";
+        currentValidasiLulus = true;
+      } else {
+        infoDiv.className = "info-box info-error";
+        currentValidasiLulus = false;
+      }
+    }
+
+    function validateFile() {
+      const file = fileInput.files[0];
+      const fileError = document.getElementById('fileError');
+      if (!file) {
+        fileError.innerText = "Wajib upload file bukti pendaftaran.";
+        fileError.classList.remove('hidden');
+        return false;
+      }
+      const maxSize = 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        fileError.innerText = "Ukuran file maksimal 5MB.";
+        fileError.classList.remove('hidden');
+        return false;
+      }
+      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png', 'image/jpg'];
+      if (!allowedTypes.includes(file.type)) {
+        fileError.innerText = "Format file harus PDF, DOC, DOCX, JPG, atau PNG.";
+        fileError.classList.remove('hidden');
+        return false;
+      }
+      fileError.classList.add('hidden');
+      selectedFile = file;
+      updateFileNamePreview();
+      return true;
+    }
+
+    function validateStep2() {
+      let isValid = true;
+      const selected = matkulSelect.value;
+      const matkulWarning = document.getElementById('matkulWarning');
+      if (!selected) {
+        matkulWarning.innerText = "Harap pilih mata kuliah terlebih dahulu.";
+        matkulWarning.classList.remove('hidden');
+        isValid = false;
+      } else {
+        matkulWarning.classList.add('hidden');
+        const scheduleValid = validateSchedule(selected);
+        if (!scheduleValid.valid) {
+          matkulWarning.innerText = scheduleValid.message;
+          matkulWarning.classList.remove('hidden');
+          isValid = false;
+        }
+      }
+      const fileOk = validateFile();
+      if (!fileOk) isValid = false;
+      
+      if (namaInput.value.trim().length < 3) {
+        showToast('Nama harus diisi minimal 3 karakter', 'error');
+        isValid = false;
+      }
+      if (nimInput.value.trim().length < 5) {
+        showToast('NIM harus diisi minimal 5 digit', 'error');
+        isValid = false;
+      }
+      return isValid;
+    }
+
+    function updateStepUI(step) {
+      for (let i = 1; i <= 3; i++) {
+        const circle = circles[i];
+        const label = labels[i];
+        if (i === step) {
+          circle.className = "step-circle active";
+          label.className = "step-label active";
+        } else if (i < step) {
+          circle.className = "step-circle completed";
+          label.className = "step-label completed";
+        } else {
+          circle.className = "step-circle inactive";
+          label.className = "step-label inactive";
+        }
+      }
+    }
+
+    function showStep(step) {
+      step1Div.classList.add('hidden');
+      step2Div.classList.add('hidden');
+      step3Div.classList.add('hidden');
+      if (step === 1) step1Div.classList.remove('hidden');
+      if (step === 2) step2Div.classList.remove('hidden');
+      if (step === 3) step3Div.classList.remove('hidden');
+      updateStepUI(step);
+
+      if (step === 3) {
+        document.getElementById('reviewNama').innerText = namaInput.value.trim();
+        document.getElementById('reviewNim').innerText = nimInput.value.trim();
+        let matkulText = jadwalMap[matkulSelect.value]?.nama || '-';
+        document.getElementById('reviewMatkul').innerText = matkulText;
+        
+        if (selectedFile && namaInput.value.trim() && matkulSelect.value) {
+          const finalName = generateNewFileName(namaInput.value.trim(), nimInput.value.trim(), matkulSelect.value);
+          document.getElementById('reviewFile').innerHTML = `<i class="fas fa-file-alt"></i> ${finalName}`;
+        } else {
+          document.getElementById('reviewFile').innerText = selectedFile?.name || 'Belum ada file';
+        }
+        
+        document.getElementById('reviewFileLink').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menunggu pengiriman...';
+        
+        const statusText = currentValidasiLulus && matkulSelect.value ? 
+          `✅ Memenuhi jadwal ujian (${jadwalMap[matkulSelect.value]?.tanggal})` : 
+          `⚠️ Belum memenuhi validasi jadwal`;
+        document.getElementById('reviewValidasiStatus').innerText = statusText;
+      }
+    }
+
+    function showToast(msg, type = 'info') {
+      const toast = document.getElementById('toastMsg');
+      toast.innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 5000);
+    }
+
+    async function processSubmit() {
+      if (!validateStep1()) {
+        showToast('Mohon lengkapi data diri dengan benar', 'error');
+        showStep(1);
+        return;
+      }
+      
+      if (!validateStep2()) {
+        showToast('Pastikan data valid dan file terupload', 'error');
+        showStep(2);
+        return;
+      }
+      
+      if (!currentValidasiLulus) {
+        showToast('Jadwal tidak memenuhi syarat!', 'error');
+        showStep(2);
+        return;
+      }
+
+      loadingOverlay.style.display = 'flex';
+      
+      try {
+        const nama = namaInput.value.trim();
+        const nim = nimInput.value.trim();
+        const matkulKey = matkulSelect.value;
+        const finalFileName = generateNewFileName(nama, nim, matkulKey);
+        
+        let fileBase64 = '';
+        if (selectedFile) {
+          fileBase64 = await fileToBase64(selectedFile);
+        }
+        
+        const formData = {
+          nama: nama,
+          nim: nim,
+          matkulKey: matkulKey,
+          fileName: selectedFile?.name || '',
+          fileContent: fileBase64,
+          userAgent: navigator.userAgent,
+          timestamp: new Date().toISOString()
+        };
+        
+        const result = await submitToBackend(formData);
+        loadingOverlay.style.display = 'none';
+        
+        if (result.success) {
+          showToast(`✅ ${result.message}`, 'success');
+          setTimeout(() => {
+            if(confirm('Pendaftaran berhasil!\n\nData sudah terkirim ke server.\n\nReset form?')) {
+              resetForm();
+              showStep(1);
+            }
+          }, 500);
+        } else {
+          showToast(`❌ Gagal: ${result.message}`, 'error');
+        }
+      } catch (error) {
+        loadingOverlay.style.display = 'none';
+        showToast(`❌ Error: ${error.message}`, 'error');
+        console.error('Submit error:', error);
+      }
+    }
+
+    function resetForm() {
+      namaInput.value = '';
+      nimInput.value = '';
+      matkulSelect.value = '';
+      fileInput.value = '';
+      selectedFile = null;
+      currentValidasiLulus = false;
+      generatedFileName = '';
+      document.getElementById('validasiInfo').classList.add('hidden');
+      document.getElementById('matkulWarning').classList.add('hidden');
+      document.getElementById('fileError').classList.add('hidden');
+      fileNamePreview.classList.add('hidden');
+      document.getElementById('reviewFileLink').innerHTML = '-';
+      clearError(namaInput);
+      clearError(nimInput);
+    }
+
+    // Event listeners
+    document.getElementById('nextStep1').addEventListener('click', () => {
+      if (validateStep1()) showStep(2);
+      else showToast('Lengkapi data diri', 'error');
+    });
+    document.getElementById('prevStep2').addEventListener('click', () => showStep(1));
+    document.getElementById('nextStep2').addEventListener('click', () => {
+      if (validateStep2()) showStep(3);
+      else showToast('Lengkapi data dengan benar', 'error');
+    });
+    document.getElementById('prevStep3').addEventListener('click', () => showStep(2));
+    document.getElementById('submitFormBtn').addEventListener('click', processSubmit);
+    
+    matkulSelect.addEventListener('change', () => {
+      updateValidasiInfo();
+      updateFileNamePreview();
+    });
+    namaInput.addEventListener('input', updateFileNamePreview);
+    nimInput.addEventListener('input', updateFileNamePreview);
+    fileInput.addEventListener('change', () => {
+      validateFile();
+      updateFileNamePreview();
+    });
+
+    // Initial
+    showStep(1);
+    updateValidasiInfo();
+    
+    console.log('Form siap digunakan!');
+    console.log('Backend URL:', BACKEND_URL);
+  </script>
+</body>
+</html>
