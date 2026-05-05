@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Form Pengumpulan Hasil UTS 20252</title>
   <style>
-    /* ===== CSS Internal (Menggantikan Tailwind) ===== */
+    /* ===== CUSTOM CSS ===== */
     * {
       margin: 0;
       padding: 0;
@@ -39,9 +39,7 @@
     }
     
     @media (min-width: 768px) {
-      .header {
-        padding: 1.25rem 2rem;
-      }
+      .header { padding: 1.25rem 2rem; }
     }
     
     .header-content {
@@ -75,9 +73,7 @@
     }
     
     @media (min-width: 768px) {
-      .title {
-        font-size: 1.875rem;
-      }
+      .title { font-size: 1.875rem; }
     }
     
     .subtitle {
@@ -100,9 +96,7 @@
     }
     
     @media (min-width: 768px) {
-      .content {
-        padding: 2rem;
-      }
+      .content { padding: 2rem; }
     }
     
     .step-progress {
@@ -164,9 +158,7 @@
     }
     
     @media (min-width: 768px) {
-      .step-label {
-        font-size: 0.875rem;
-      }
+      .step-label { font-size: 0.875rem; }
     }
     
     .form-group {
@@ -256,10 +248,6 @@
     .flex-end {
       display: flex;
       justify-content: flex-end;
-    }
-    
-    .gap-2 {
-      gap: 0.5rem;
     }
     
     .info-box {
@@ -356,9 +344,7 @@
     }
     
     @media (min-width: 768px) {
-      .grid-2 {
-        grid-template-columns: 1fr 1fr;
-      }
+      .grid-2 { grid-template-columns: 1fr 1fr; }
     }
     
     .mt-1 { margin-top: 0.25rem; }
@@ -468,13 +454,13 @@
             <div class="grid grid-2">
               <div class="form-group">
                 <label>Nama Lengkap <span class="required">*</span></label>
-                <input type="text" id="nama" name="nama" placeholder="Contoh: Ahmad Fauzi">
-                <p class="text-xs text-gray-400 mt-1">Minimal 3 karakter</p>
+                <input type="text" id="nama" name="nama" placeholder="Contoh: Ahmad Fauzi" maxlength="100">
+                <p class="text-xs text-gray-400 mt-1">Minimal 3 karakter, maksimal 100 karakter</p>
               </div>
               <div class="form-group">
                 <label>NIM <span class="required">*</span></label>
-                <input type="text" id="nim" name="nim" placeholder="Contoh: 20231001001">
-                <p class="text-xs text-gray-400 mt-1">Nomor Induk Mahasiswa, minimal 5 digit</p>
+                <input type="text" id="nim" name="nim" placeholder="Contoh: 20231001001" maxlength="15" pattern="[0-9]+">
+                <p class="text-xs text-gray-400 mt-1">Nomor Induk Mahasiswa, 5-15 digit angka</p>
               </div>
             </div>
             <div class="flex-end pt-4">
@@ -501,9 +487,9 @@
             </div>
 
             <div class="upload-area">
-              <label class="font-semibold text-gray-700 mb-1">Upload Berkas (PDF/DOC/IMG) <span class="required">*</span></label>
-              <input type="file" id="fileUpload" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
-              <p class="text-xs text-gray-400 mt-2">Maks 5MB, format PDF, DOC, JPG, PNG</p>
+              <label class="font-semibold text-gray-700 mb-1">Upload Berkas (PDF/DOC) <span class="required">*</span></label>
+              <input type="file" id="fileUpload" accept=".pdf,.doc,.docx">
+              <p class="text-xs text-gray-400 mt-2">Maks 5MB, format PDF, DOC, DOCX</p>
               <div id="fileError" class="text-red-500 text-xs mt-1 hidden"></div>
               <div id="fileNamePreview" class="text-indigo-600 text-xs mt-2 hidden" style="background: #eef2ff; padding: 0.5rem; border-radius: 0.5rem;"></div>
             </div>
@@ -542,13 +528,12 @@
 
   <script>
     // ==================== KONFIGURASI BACKEND ====================
-    // URL Web App Google Apps Script
-    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycby4eg4KpNd6S0GSrhBxQLTkooi8BSNo7qwNqRAkI6NPqfGfNMPOGqI6lTQnkyzz6kcohw/exec';
-
-
+    // Ganti dengan URL Web App Google Apps Script Anda
+    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbz0_yUoZFMkIs8_KDqo6mqK7c8zcFBDjj_plUqCvVSb1RvG50cza-ZtosIqhTGtvMTRVA/exec';
+    
     // Jadwal validasi (sinkron dengan backend)
     const jadwalMap = {
-      kuantitatifA: { nama: "Metode Penelitian Kuantitatif Kelas A", kelas: "A", tanggal: "2026-05-04", start: "14:00", end: "16:30" },
+      kuantitatifA: { nama: "Metode Penelitian Kuantitatif Kelas A", kelas: "A", tanggal: "2026-05-05", start: "10:00", end: "11:30" },
       kuantitatifE: { nama: "Metode Penelitian Kuantitatif Kelas E", kelas: "E", tanggal: "2026-05-05", start: "15:00", end: "16:30" },
       kuantitatifI: { nama: "Metode Penelitian Kuantitatif Kelas I", kelas: "I", tanggal: "2026-05-05", start: "19:30", end: "21:30" },
       sosiologiK: { nama: "Sosiologi Komunikasi Kelas K", kelas: "K", tanggal: "2026-05-07", start: "19:30", end: "21:00" }
@@ -581,6 +566,76 @@
       3: document.getElementById('step3Label')
     };
 
+    // ==================== FUNGSI KEAMANAN ====================
+    
+    // Validasi XSS - Cek karakter berbahaya
+    function validateXSS() {
+      const nama = namaInput.value.trim();
+      
+      // Daftar karakter berbahaya yang diblokir
+      const dangerousChars = /[<>{}]/;
+      if (dangerousChars.test(nama)) {
+        showToast('❌ Nama mengandung karakter tidak valid (< > { })', 'error');
+        setError(namaInput, 'Nama tidak boleh mengandung karakter < > { }');
+        return false;
+      }
+      
+      // Cek script injection
+      const scriptPattern = /script|javascript|onclick|onload|onerror/i;
+      if (scriptPattern.test(nama)) {
+        showToast('❌ Nama mengandung pattern mencurigakan', 'error');
+        setError(namaInput, 'Nama mengandung karakter tidak valid');
+        return false;
+      }
+      
+      return true;
+    }
+    
+    // Hapus data sensitif dari memory setelah submit
+    function clearSensitiveData() {
+      // Hapus referensi file dari memory
+      selectedFile = null;
+      
+      // Kosongkan input file
+      if (fileInput) {
+        fileInput.value = '';
+      }
+      
+      // Kosongkan preview nama file
+      generatedFileName = '';
+      
+      // Reset variabel sensitif lainnya
+      if (fileNamePreview) {
+        fileNamePreview.classList.add('hidden');
+        fileNamePreview.innerHTML = '';
+      }
+      
+      // Paksa garbage collection (hint for browser)
+      if (window.gc) {
+        window.gc();
+      }
+      
+      console.log('Sensitive data cleared from memory');
+    }
+    
+    // Validasi tambahan untuk NIM (hanya angka)
+    function validateNIM() {
+      const nim = nimInput.value.trim();
+      if (nim && !/^\d+$/.test(nim)) {
+        setError(nimInput, 'NIM hanya boleh berisi angka');
+        return false;
+      }
+      return true;
+    }
+    
+    // Sanitasi input sebelum dikirim
+    function sanitizeInput(input) {
+      return input.trim()
+        .replace(/[<>{}]/g, '')  // Hapus karakter berbahaya
+        .replace(/script/gi, '')  // Hapus kata script
+        .substring(0, 100);       // Batasi panjang
+    }
+
     // ==================== FUNGSI KONEKSI KE BACKEND ====================
     async function submitToBackend(formData) {
       try {
@@ -596,8 +651,6 @@
           })
         });
         
-        // Karena mode no-cors, kita tidak bisa membaca response
-        // Asumsikan berhasil jika tidak error
         return { 
           success: true, 
           message: 'Data berhasil dikirim ke server!'
@@ -626,10 +679,18 @@
     }
 
     function generateNewFileName(nama, nim, matkulKey) {
-      let cleanNama = nama.trim().replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_');
+      // Sanitasi nama terlebih dahulu
+      let cleanNama = nama.trim()
+        .replace(/[^a-zA-Z0-9\s]/g, '')
+        .replace(/\s+/g, '_')
+        .substring(0, 50);
+      
       let matkulNama = jadwalMap[matkulKey]?.nama || 'Unknown_MK';
-      let cleanMatkul = matkulNama.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_');
-      cleanMatkul = cleanMatkul.replace('Kelas_', '');
+      let cleanMatkul = matkulNama
+        .replace(/[^a-zA-Z0-9\s]/g, '')
+        .replace(/\s+/g, '_')
+        .replace('Kelas_', '');
+      
       const newName = `20252_UTS_${cleanNama}_${cleanMatkul}`;
       
       if (selectedFile) {
@@ -644,7 +705,8 @@
       const matkulKey = matkulSelect.value;
       
       if (nama && nama.length >= 3 && matkulKey && selectedFile) {
-        generatedFileName = generateNewFileName(nama, nimInput.value.trim(), matkulKey);
+        const nim = nimInput.value.trim();
+        generatedFileName = generateNewFileName(nama, nim, matkulKey);
         fileNamePreview.innerHTML = `<i class="fas fa-tag"></i> Nama file: <strong class="font-mono">${generatedFileName}</strong>`;
         fileNamePreview.classList.remove('hidden');
       } else if (selectedFile && (!nama || nama.length < 3)) {
@@ -660,19 +722,36 @@
       const namaVal = namaInput.value.trim();
       const nimVal = nimInput.value.trim();
 
+      // Validasi XSS
+      if (!validateXSS()) {
+        valid = false;
+      }
+      
+      // Validasi Nama
       if (namaVal.length < 3) {
         setError(namaInput, 'Nama minimal 3 karakter');
+        valid = false;
+      } else if (namaVal.length > 100) {
+        setError(namaInput, 'Nama maksimal 100 karakter');
         valid = false;
       } else {
         clearError(namaInput);
       }
 
-      if (nimVal.length < 5 || !/^\d+$/.test(nimVal)) {
-        setError(nimInput, 'NIM harus berupa angka minimal 5 digit');
+      // Validasi NIM
+      if (nimVal.length < 5) {
+        setError(nimInput, 'NIM minimal 5 digit');
+        valid = false;
+      } else if (nimVal.length > 15) {
+        setError(nimInput, 'NIM maksimal 15 digit');
+        valid = false;
+      } else if (!/^\d+$/.test(nimVal)) {
+        setError(nimInput, 'NIM harus berupa angka');
         valid = false;
       } else {
         clearError(nimInput);
       }
+      
       return valid;
     }
 
@@ -748,12 +827,21 @@
         fileError.classList.remove('hidden');
         return false;
       }
-      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png', 'image/jpg'];
+      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
       if (!allowedTypes.includes(file.type)) {
-        fileError.innerText = "Format file harus PDF, DOC, DOCX, JPG, atau PNG.";
+        fileError.innerText = "Format file harus PDF, DOC, DOCX.";
         fileError.classList.remove('hidden');
         return false;
       }
+      
+      // Validasi nama file berbahaya
+      const dangerousFileName = /[<>{}]/;
+      if (dangerousFileName.test(file.name)) {
+        fileError.innerText = "Nama file mengandung karakter tidak valid.";
+        fileError.classList.remove('hidden');
+        return false;
+      }
+      
       fileError.classList.add('hidden');
       selectedFile = file;
       updateFileNamePreview();
@@ -786,6 +874,10 @@
       }
       if (nimInput.value.trim().length < 5) {
         showToast('NIM harus diisi minimal 5 digit', 'error');
+        isValid = false;
+      }
+      if (!/^\d+$/.test(nimInput.value.trim())) {
+        showToast('NIM harus berupa angka', 'error');
         isValid = false;
       }
       return isValid;
@@ -847,6 +939,12 @@
     }
 
     async function processSubmit() {
+      // Validasi XSS sebelum submit
+      if (!validateXSS()) {
+        showStep(1);
+        return;
+      }
+      
       if (!validateStep1()) {
         showToast('Mohon lengkapi data diri dengan benar', 'error');
         showStep(1);
@@ -868,7 +966,8 @@
       loadingOverlay.style.display = 'flex';
       
       try {
-        const nama = namaInput.value.trim();
+        // Sanitasi input sebelum dikirim
+        const nama = sanitizeInput(namaInput.value.trim());
         const nim = nimInput.value.trim();
         const matkulKey = matkulSelect.value;
         const finalFileName = generateNewFileName(nama, nim, matkulKey);
@@ -893,6 +992,10 @@
         
         if (result.success) {
           showToast(`✅ ${result.message}`, 'success');
+          
+          // Hapus data sensitif dari memory setelah sukses
+          clearSensitiveData();
+          
           setTimeout(() => {
             if(confirm('Pendaftaran berhasil!\n\nData sudah terkirim ke server.\n\nReset form?')) {
               resetForm();
@@ -910,6 +1013,7 @@
     }
 
     function resetForm() {
+      // Hapus semua data form
       namaInput.value = '';
       nimInput.value = '';
       matkulSelect.value = '';
@@ -917,19 +1021,26 @@
       selectedFile = null;
       currentValidasiLulus = false;
       generatedFileName = '';
+      
+      // Hapus error messages
       document.getElementById('validasiInfo').classList.add('hidden');
       document.getElementById('matkulWarning').classList.add('hidden');
       document.getElementById('fileError').classList.add('hidden');
       fileNamePreview.classList.add('hidden');
       document.getElementById('reviewFileLink').innerHTML = '-';
+      
+      // Clear error borders
       clearError(namaInput);
       clearError(nimInput);
+      
+      // Bersihkan data sensitif tambahan
+      clearSensitiveData();
     }
 
     // Event listeners
     document.getElementById('nextStep1').addEventListener('click', () => {
       if (validateStep1()) showStep(2);
-      else showToast('Lengkapi data diri', 'error');
+      else showToast('Lengkapi data diri dengan benar', 'error');
     });
     document.getElementById('prevStep2').addEventListener('click', () => showStep(1));
     document.getElementById('nextStep2').addEventListener('click', () => {
@@ -944,7 +1055,10 @@
       updateFileNamePreview();
     });
     namaInput.addEventListener('input', updateFileNamePreview);
-    nimInput.addEventListener('input', updateFileNamePreview);
+    nimInput.addEventListener('input', () => {
+      validateNIM();
+      updateFileNamePreview();
+    });
     fileInput.addEventListener('change', () => {
       validateFile();
       updateFileNamePreview();
@@ -954,7 +1068,7 @@
     showStep(1);
     updateValidasiInfo();
     
-    console.log('Form siap digunakan!');
+    console.log('Form siap digunakan dengan fitur keamanan tambahan!');
     console.log('Backend URL:', BACKEND_URL);
   </script>
 </body>
